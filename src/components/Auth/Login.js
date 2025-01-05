@@ -1,46 +1,27 @@
 // Location: src/components/Auth/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { useAuth } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 import './Login.css';
 
 function Login() {
-  const [email, setEmail] = useState('admin@cases.com');
-  const [password, setPassword] = useState('Admin123!');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState('kennedy@hudumacenter.com');
+  const [password, setPassword] = useState('Kenya321');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const createTestUser = async () => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Test user created successfully');
-    } catch (err) {
-      if (err.code === 'auth/email-already-in-use') {
-        console.log('User already exists, proceeding with login');
-      } else {
-        console.error('Error creating test user:', err);
-      }
-    }
-  };
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-
+    
     try {
-      // Try to create the test user first (will fail if already exists)
-      await createTestUser();
-      
-      // Then try to login
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login successful:', userCredential.user.email);
-      navigate('/');
-    } catch (err) {
-      console.error('Login error:', err);
-      setError(err.message);
+      setLoading(true);
+      await login(email, password);
+      toast.success('Successfully logged in!');
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -50,9 +31,6 @@ function Login() {
     <div className="login-container">
       <div className="login-card">
         <h2>Welcome Back</h2>
-        <p className="login-subtitle">Sign in to your account</p>
-        {error && <div className="error-alert">{error}</div>}
-        
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
             <label>Email</label>
@@ -63,7 +41,6 @@ function Login() {
               required
             />
           </div>
-
           <div className="form-group">
             <label>Password</label>
             <input
@@ -73,7 +50,6 @@ function Login() {
               required
             />
           </div>
-
           <button 
             type="submit" 
             className="login-button" 
@@ -81,15 +57,6 @@ function Login() {
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
-
-          {window.location.hostname === 'localhost' && (
-            <div className="debug-info">
-              <p>Running in development mode with Firebase Emulators</p>
-              <p>Default credentials:</p>
-              <p>Email: admin@cases.com</p>
-              <p>Password: Admin123!</p>
-            </div>
-          )}
         </form>
       </div>
     </div>

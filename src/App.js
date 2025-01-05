@@ -8,11 +8,14 @@ import NewClient from './components/Client/NewClient';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import SetupAdmin from './components/Auth/SetupAdmin';
 import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <ToastContainer />
         <div className="app">
           <Routes>
             <Route path="/setup-admin" element={<SetupAdmin />} />
