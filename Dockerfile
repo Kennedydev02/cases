@@ -49,8 +49,8 @@ RUN npm install -g serve
 # Copy built files from build stage
 COPY --from=build /app/build ./build
 
-# Expose port
-EXPOSE 3000
+# Expose port 8080 (Fly.io preferred port)
+EXPOSE 8080
 
-# Start the application
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Start the application on port 8080
+CMD ["serve", "-s", "build", "-l", "8080"]
