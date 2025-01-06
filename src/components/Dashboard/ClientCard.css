@@ -1,77 +1,86 @@
 .client-card {
   background: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  padding: 24px;
   position: relative;
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.client-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.client-status {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.status-active {
-  background: #e6f4ea;
-  color: #34a853;
-}
-
-.status-pending {
-  background: #fff4e5;
-  color: #fbbc04;
-}
-
-.status-closed {
-  background: #f3e8fd;
-  color: #a142f4;
+.client-avatar {
+  width: 40px;
+  height: 40px;
+  background: #f1f3f4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  margin-bottom: 16px;
 }
 
 .client-name {
   font-size: 18px;
   font-weight: 600;
-  color: #202124;
-  margin: 0 0 15px;
+  color: #333;
+  margin: 0 0 16px 0;
 }
 
 .client-info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .info-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #5f6368;
+  color: #666;
   font-size: 14px;
 }
 
 .info-item svg {
   color: #4285f4;
+  font-size: 16px;
+}
+
+.status-badge {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-active {
+  background: #e6f4ea;
+  color: #1e8e3e;
+}
+
+.status-pending {
+  background: #fff3e0;
+  color: #f9ab00;
+}
+
+.status-closed {
+  background: #f3e5f5;
+  color: #a142f4;
 }
 
 .view-details {
+  width: 100%;
+  padding: 10px;
   margin-top: 20px;
-  padding: 8px 16px;
   background: #4285f4;
   color: white;
   border: none;
   border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s;
-  width: 100%;
+  transition: background 0.2s ease;
 }
 
 .view-details:hover {
