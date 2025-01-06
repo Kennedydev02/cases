@@ -1,41 +1,35 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import Navbar from './components/Navigation/Navbar';
-import Dashboard from './components/Dashboard/Dashboard';
-import Login from './components/Auth/Login';
-import NewClient from './components/Client/NewClient';
-import PrivateRoute from './components/Auth/PrivateRoute';
-import SetupAdmin from './components/Auth/SetupAdmin';
-import './App.css';
 import { ToastContainer } from 'react-toastify';
+import Login from './components/Auth/Login';
+import PrivateRoute from './components/Auth/PrivateRoute';
+import Dashboard from './components/Dashboard/Dashboard';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <ToastContainer />
-        <div className="app">
-          <Routes>
-            <Route path="/setup-admin" element={<SetupAdmin />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/*"
-              element={
-                <PrivateRoute>
-                  <>
-                    <Navbar />
-                    <Routes>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="/add-client" element={<NewClient />} />
-                    </Routes>
-                  </>
-                </PrivateRoute>
-              }
-            />
-          </Routes>
-        </div>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          
+          {/* Private Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          
+          {/* Redirect root to login */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+        </Routes>
       </Router>
     </AuthProvider>
   );
