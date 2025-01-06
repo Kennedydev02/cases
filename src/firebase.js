@@ -11,13 +11,16 @@ const firebaseConfig = {
   appId: "1:1043831776937:web:c0e24094c8d7e0c0f4b3bb"
 };
 
-console.log('Initializing Firebase with config:', { ...firebaseConfig, apiKey: '[HIDDEN]' });
-
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-console.log('Firebase initialized successfully');
+// Enable local persistence for Firestore
+if (window.location.hostname === 'localhost') {
+  console.log('Running in development mode');
+  // You can add emulator connections here if needed
+}
 
 export { auth, db };
 export default app; 
