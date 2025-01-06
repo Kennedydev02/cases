@@ -1,11 +1,11 @@
 // Location: src/components/Dashboard/DashboardFilters.js
 import React from 'react';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaFilter } from 'react-icons/fa';
 import './Dashboard.css';
 
 function DashboardFilters({ filterStatus, setFilterStatus, searchQuery, setSearchQuery }) {
   return (
-    <div className="dashboard-filters">
+    <div className="search-section">
       <div className="search-bar">
         <FaSearch className="search-icon" />
         <input
@@ -15,7 +15,8 @@ function DashboardFilters({ filterStatus, setFilterStatus, searchQuery, setSearc
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className="status-filters">
+
+      <div className="filter-buttons">
         <button 
           className={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}
           onClick={() => setFilterStatus('all')}
@@ -39,6 +40,14 @@ function DashboardFilters({ filterStatus, setFilterStatus, searchQuery, setSearc
           onClick={() => setFilterStatus('closed')}
         >
           Closed
+        </button>
+      </div>
+
+      <div className="date-filters">
+        <input type="date" className="date-input" placeholder="Start Date" />
+        <input type="date" className="date-input" placeholder="End Date" />
+        <button className="more-filters">
+          <FaFilter /> More Filters
         </button>
       </div>
     </div>

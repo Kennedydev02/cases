@@ -2,30 +2,31 @@ import React from 'react';
 import { FaUser, FaPhone, FaEnvelope, FaClock } from 'react-icons/fa';
 import './ClientCard.css';
 
-function ClientCard({ client }) {
+function ClientCard({ caseData }) {
   return (
     <div className="client-card">
-      <div className="client-header">
-        <div className="client-avatar">
-          <FaUser />
-        </div>
-        <div className="client-status">Active</div>
+      <div className="client-avatar">
+        <FaUser />
       </div>
+      <div className={`status-badge status-${caseData.status.toLowerCase()}`}>
+        {caseData.status}
+      </div>
+      <h3 className="client-name">{caseData.name}</h3>
       <div className="client-info">
-        <h3>John Doe</h3>
         <div className="info-item">
-          <FaPhone /> <span>+254 712 345 678</span>
+          <FaPhone />
+          <span>{caseData.phone}</span>
         </div>
         <div className="info-item">
-          <FaEnvelope /> <span>john@example.com</span>
+          <FaEnvelope />
+          <span>{caseData.email}</span>
         </div>
         <div className="info-item">
-          <FaClock /> <span>Created: Jan 5, 2024</span>
+          <FaClock />
+          <span>Created: {caseData.created}</span>
         </div>
       </div>
-      <div className="client-actions">
-        <button className="view-details">View Details</button>
-      </div>
+      <button className="view-details">View Details</button>
     </div>
   );
 }
