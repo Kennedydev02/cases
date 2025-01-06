@@ -11,6 +11,12 @@ const firebaseConfig = {
   appId: "1:1043831776937:web:c0e24094c8d7e0c0f4b3bb"
 };
 
+// Initialize Firebase
+console.log('Initializing Firebase with config:', {
+  ...firebaseConfig,
+  apiKey: firebaseConfig.apiKey ? '[KEY PRESENT]' : '[KEY MISSING]'
+});
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);

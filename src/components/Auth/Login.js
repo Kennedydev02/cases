@@ -17,12 +17,14 @@ function Login() {
     
     try {
       setLoading(true);
+      console.log('Attempting login with:', { email });
       await login(email, password);
+      console.log('Login successful');
       toast.success('Successfully logged in!');
       navigate('/dashboard');
     } catch (error) {
-      console.error('Login error:', error);
-      toast.error(error.message);
+      console.error('Login error:', error.code, error.message);
+      toast.error(`Login failed: ${error.message}`);
     } finally {
       setLoading(false);
     }
