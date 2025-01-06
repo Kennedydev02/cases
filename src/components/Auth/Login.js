@@ -21,6 +21,7 @@ function Login() {
       toast.success('Successfully logged in!');
       navigate('/dashboard');
     } catch (error) {
+      console.error('Login error:', error);
       toast.error(error.message);
     } finally {
       setLoading(false);

@@ -35,14 +35,6 @@ RUN npm install
 # Copy source code
 COPY . .
 
-# Create .env file from environment variables
-RUN echo "REACT_APP_FIREBASE_API_KEY=$REACT_APP_FIREBASE_API_KEY" >> .env && \
-    echo "REACT_APP_FIREBASE_AUTH_DOMAIN=$REACT_APP_FIREBASE_AUTH_DOMAIN" >> .env && \
-    echo "REACT_APP_FIREBASE_PROJECT_ID=$REACT_APP_FIREBASE_PROJECT_ID" >> .env && \
-    echo "REACT_APP_FIREBASE_STORAGE_BUCKET=$REACT_APP_FIREBASE_STORAGE_BUCKET" >> .env && \
-    echo "REACT_APP_FIREBASE_MESSAGING_SENDER_ID=$REACT_APP_FIREBASE_MESSAGING_SENDER_ID" >> .env && \
-    echo "REACT_APP_FIREBASE_APP_ID=$REACT_APP_FIREBASE_APP_ID" >> .env
-
 # Build the application
 RUN npm run build
 
@@ -57,8 +49,8 @@ RUN npm install -g serve
 # Copy built files from build stage
 COPY --from=build /app/build ./build
 
-# Expose port 8080 (Fly.io preferred port)
+# Expose port 8080
 EXPOSE 8080
 
-# Start the application on port 8080
+# Start the application
 CMD ["serve", "-s", "build", "-l", "8080"]
