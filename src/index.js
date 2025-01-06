@@ -3,19 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-// Add some basic global styles
-const style = document.createElement('style');
-style.textContent = `
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #f5f5f5;
-  }
-`;
-document.head.appendChild(style);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -62,5 +49,11 @@ root.render(
     </ErrorBoundary>
   </React.StrictMode>
 );
-
-reportWebVitals();
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+if (process.env.NODE_ENV === 'development') {
+  import('./reportWebVitals').then(({ default: reportWebVitals }) => {
+    reportWebVitals(console.log);
+  });
+}
