@@ -1,55 +1,104 @@
 import React, { useState } from 'react';
+import { FaSearch, FaPlus, FaFilter } from 'react-icons/fa';
 import Navbar from '../Navigation/Navbar';
 import DashboardMetrics from './DashboardMetrics';
-import DashboardFilters from './DashboardFilters';
 import ClientCard from './ClientCard';
 import NewClient from '../Client/NewClient';
-import CaseDetails from '../Client/CaseDetails';
-import { useAuth } from '../../contexts/AuthContext';
 import './Dashboard.css';
 
 function Dashboard() {
-  const { currentUser } = useAuth();
   const [showNewClientModal, setShowNewClientModal] = useState(false);
-  const [showCaseDetails, setShowCaseDetails] = useState(false);
-  const [selectedCase, setSelectedCase] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-
-  const handleCaseClick = (caseId) => {
-    setSelectedCase(caseId);
-    setShowCaseDetails(true);
-  };
+  const [dateRange, setDateRange] = useState({ start: '', end: '' });
 
   const cases = [
     {
       id: 1,
-      clientName: "John Doe",
-      caseType: "Civil",
-      status: "Active",
-      date: "2024-01-15"
+      name: "John Doe",
+      phone: "+254 712 345 678",
+      email: "john@example.com",
+      status: "active",
+      created: "Jan 5, 2024",
+      nextPayment: "2024-02-01",
+      paymentStatus: "upcoming"
     },
-    // Add more cases as needed
+    // Add more sample cases
   ];
 
   return (
     <div className="dashboard-layout">
       <Navbar />
+      
       <div className="dashboard-content">
         <DashboardMetrics />
-        
-        <div className="dashboard-header">
-          <DashboardFilters 
-            filterStatus={filterStatus}
-            setFilterStatus={setFilterStatus}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
+
+        <div className="dashboard-actions">
+          <div className="search-section">
+            <div className="search-bar">
+              <FaSearch className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search cases..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+
+            <div className="filter-buttons">
+              <button 
+                className={`filter-btn ${filterStatus === 'all' ? 'active' : ''}`}
+                onClick={() => setFilterStatus('all')}
+              >
+                All Cases
+              </button>
+              <button 
+                className={`filter-btn ${filterStatus === 'active' ? 'active' : ''}`}
+                onClick={() => setFilterStatus('active')}
+              >
+                Active
+              </button>
+              <button 
+                className={`filter-btn ${filterStatus === 'pending' ? 'active' : ''}`}
+                onClick={() => setFilterStatus('pending')}
+              >
+                Pending
+              </button>
+              <button 
+                className={`filter-btn ${filterStatus === 'closed' ? 'active' : ''}`}
+                onClick={() => setFilterStatus('closed')}
+              >
+                Closed
+              </button>
+            </div>
+          </div>
+
           <button 
             className="add-case-btn"
             onClick={() => setShowNewClientModal(true)}
           >
-            Add New Case
+            <FaPlus /> Add New Case
+          </button>
+        </div>
+
+        <div className="advanced-filters">
+          <div className="date-filters">
+            <input
+              type="date"
+              value={dateRange.start}
+              onChange={(e) => setDateRange({...dateRange, start: e.target.value})}
+              className="date-input"
+            />
+            <span>to</span>
+            <input
+              type="date"
+              value={dateRange.end}
+              onChange={(e) => setDateRange({...dateRange, end: e.target.value})}
+              className="date-input"
+            />
+          </div>
+          <button className="filter-toggle">
+            <FaFilter /> More Filters
           </button>
         </div>
 
@@ -58,26 +107,17 @@ function Dashboard() {
             <ClientCard 
               key={caseItem.id}
               caseData={caseItem}
-              onClick={() => handleCaseClick(caseItem.id)}
             />
           ))}
         </div>
-
-        {showNewClientModal && (
-          <NewClient 
-            show={showNewClientModal}
-            onClose={() => setShowNewClientModal(false)}
-          />
-        )}
-
-        {showCaseDetails && (
-          <CaseDetails 
-            show={showCaseDetails}
-            onClose={() => setShowCaseDetails(false)}
-            caseId={selectedCase}
-          />
-        )}
       </div>
+
+      {showNewClientModal && (
+        <NewClient 
+          show={showNewClientModal}
+          onClose={() => setShowNewClientModal(false)}
+        />
+      )}
     </div>
   );
 }
