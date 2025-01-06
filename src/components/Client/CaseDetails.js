@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import EditDetailsModal from '../modals/EditDetailsModal';
-import ManageDocumentsModal from '../modals/ManageDocumentsModal';
-import QuickPaymentModal from '../modals/QuickPaymentModal';
-import RecordPaymentModal from '../modals/RecordPaymentModal';
+import EditDetailsModal from './modals/EditDetailsModal';
+import QuickPaymentModal from './modals/QuickPaymentModal';
+import RecordPaymentModal from './modals/RecordPaymentModal';
 
 function CaseDetails() {
   const { id } = useParams();
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showDocumentsModal, setShowDocumentsModal] = useState(false);
   const [showQuickPayModal, setShowQuickPayModal] = useState(false);
   const [showRecordPayModal, setShowRecordPayModal] = useState(false);
 
@@ -27,7 +25,6 @@ function CaseDetails() {
         <h2>Case Details - {caseDetails.clientName}</h2>
         <div className="action-buttons">
           <button onClick={() => setShowEditModal(true)}>Edit Details</button>
-          <button onClick={() => setShowDocumentsModal(true)}>Manage Documents</button>
           <button onClick={() => setShowQuickPayModal(true)}>Quick Payment</button>
           <button onClick={() => setShowRecordPayModal(true)}>Record Payment</button>
         </div>
@@ -50,12 +47,6 @@ function CaseDetails() {
         show={showEditModal}
         handleClose={() => setShowEditModal(false)}
         caseDetails={caseDetails}
-      />
-
-      <ManageDocumentsModal
-        show={showDocumentsModal}
-        handleClose={() => setShowDocumentsModal(false)}
-        caseId={id}
       />
 
       <QuickPaymentModal
