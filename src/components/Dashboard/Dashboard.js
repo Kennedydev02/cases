@@ -1,35 +1,46 @@
-import React from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import Navbar from '../Navigation/Navbar';
+import ClientCard from './ClientCard';
+import DashboardFilters from './DashboardFilters';
+import DashboardMetrics from './DashboardMetrics';
+import NewClient from '../Client/NewClient';
 import './Dashboard.css';
 
 function Dashboard() {
-  const { currentUser, logout } = useAuth();
-  const navigate = useNavigate();
+  const [showNewClientModal, setShowNewClientModal] = useState(false);
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate('/login');
-    } catch (error) {
-      console.error('Failed to log out:', error);
-    }
+  const handleNewClient = () => {
+    setShowNewClientModal(true);
   };
 
   return (
     <div className="dashboard-container">
-      <header className="dashboard-header">
-        <h1>Welcome to Dashboard</h1>
-        <div className="user-info">
-          <span>{currentUser?.email}</span>
-          <button onClick={handleLogout} className="logout-button">
-            Logout
+      <Navbar />
+      <div className="dashboard-content">
+        <DashboardMetrics />
+        <div className="dashboard-actions">
+          <DashboardFilters 
+            filterStatus={filterStatus}
+            setFilterStatus={setFilterStatus}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <button className="new-client-btn" onClick={handleNewClient}>
+            Add New Case
           </button>
         </div>
-      </header>
-      <main className="dashboard-content">
-        <p>Your dashboard content goes here</p>
-      </main>
+        <div className="client-cards-grid">
+          <ClientCard />
+        </div>
+      </div>
+      {showNewClientModal && (
+        <NewClient 
+          show={showNewClientModal} 
+          onClose={() => setShowNewClientModal(false)} 
+        />
+      )}
     </div>
   );
 }
